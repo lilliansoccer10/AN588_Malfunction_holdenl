@@ -1,0 +1,76 @@
+---
+title: "What's Your Malfunction?"
+author: "Lillian Holden"
+date: "2023-10-23"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("BSDA")
+library(BSDA)
+```
+
+### Part 1
+
+### Create Two Data Sets with Normal Distribution
+```{r}
+set.seed(0)
+data.frame <- rnorm(50,5,1)
+additional.data.frame <- rnorm(50,6,1)
+```
+
+### Test that a One and Two Sample Z Test Works for the Data Sets
+```{r}
+z.test(data.frame, y=additional.data.frame, alternative='two.sided', mu=0, sigma.x=1, sigma.y=1,conf.level=.95)
+```
+### Create the Function
+```{r}
+z.prop.test <- 
+```
+
+```{r}
+z.prop.test(data.frame, additional.data.frame)
+```
+
+### Part 2
+
+```{r}
+library(curl)
+library(ggplot2)
+```
+
+### Import the Data Set
+```{r}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/KamilarAndCooperData.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE) #Assign D as the vector for the data set
+head(d)
+```
+
+### Plot the variables in a Scatterplot
+```{r}
+par(mfrow = c(1, 2))
+plot(data=d, MaxLongevity_m ~ Brain_Size_Species_Mean)
+plot(data=d, log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean))
+```
+
+### Add A Fitted Line to the Scatterplots
+
+```{r}
+par(mfrow = c(1, 2))
+g <- ggplot(data = d, aes(x = Brain_Size_Species_Mean, y = MaxLongevity_m))
+g <- g + geom_point()
+g <- g + geom_smooth(method = "lm", formula = y ~ x)
+g
+h <- ggplot(data = d, aes(x = log(Brain_Size_Species_Mean), y = log(MaxLongevity_m)))
+h <- h + geom_point()
+h <- h + geom_smooth(method = "lm", formula = y ~ x)
+h
+```
+
+
