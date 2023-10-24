@@ -25,7 +25,9 @@ data.frame <- rnorm(50,5,1)
 additional.data.frame <- rnorm(50,6,1)
 ```
 
-> z.test
+```{r}
+z.test
+```
 
 ### Test that a One and Two Sample Z Test Works for the Data Sets
 ```{r}
@@ -45,6 +47,7 @@ z.prop.test(data.frame, additional.data.frame)
 ```{r}
 library(curl)
 library(ggplot2)
+library(tidyverse)
 ```
 
 ### Import the Data Set
@@ -97,24 +100,25 @@ ciI
 ciII <- confint(mII, level = 0.90)  
 ciII
 ```
-
+### Plot the 90% CI and Predicion 
 ```{r}
-par(mfrow = c(1, 2))
 g <- ggplot(data = d, aes(x = Brain_Size_Species_Mean, y = MaxLongevity_m))
 g <- g + geom_point()
-g <- g + geom_smooth(method = "lm", formula = y ~ x, colour = "black")
-g <- g + geom_abline(intercept = 230.540738, slope = 1.035571, linewidth = 1, colour = "blue")
-g <- g + geom_abline(intercept = 267.36379, slope = 1.40041, linewidth = 1, colour = "blue")
+g <- g + geom_smooth(method = "lm", formula = y ~ x, color = "black")
+g <- g + geom_abline(intercept = 230.540738, slope = 1.035571, linewidth = 1, color = "blue")
+g <- g + geom_abline(intercept = 267.36379, slope = 1.40041, linewidth = 1, color = "blue")
 g + annotate("text", x = 150, y = 800, label = "y=1.2180x + 248.9523")
+```
+```{r}
 h <- ggplot(data = d, aes(x = log(Brain_Size_Species_Mean), y = log(MaxLongevity_m)))
 h <- h + geom_point()
-h <- h + geom_smooth(method = "lm", formula = y ~ x, colour = "black")
-h <- h + geom_abline(intercept = 4.7644934, slope = 0.2046396, linewidth = 1, colour = "blue")
-h <- h + geom_abline(intercept = 4.9934084, slope = 0.2636595, linewidth = 1, colour = "blue")
-h + annotate("text", x = 2, y = 6.5, label = "y=0.23415x +  4.87895")
+h <- h + geom_smooth(method = "lm", formula = y ~ x, color = "black")
+h <- h + geom_abline(intercept = 4.7644934, slope = 0.2046396, linewidth = 1, color = "blue")
+h <- h + geom_abline(intercept = 4.9934084, slope = 0.2636595, linewidth = 1, color = "blue")
+h + annotate("text", x = 2, y = 6.5, label = "y=0.23415x +  4.87895") 
 ```
 
-# I can't Figure out How to Make A Legend :( 
+# I can't Figure out How to Make A Legend :( Any suggestions?
 
 ```{r}
 cipredI <- predict(mI, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "confidence",
