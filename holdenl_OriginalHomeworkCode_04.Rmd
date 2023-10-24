@@ -61,7 +61,7 @@ plot(data=d, MaxLongevity_m ~ Brain_Size_Species_Mean)
 plot(data=d, log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean))
 ```
 
-### Add A Fitted Line to the Scatterplots
+### Add A Fitted Line to the Scatterplots - Determine the Intercept(B0) and Slope (B1)
 
 ```{r}
 mI <- lm(MaxLongevity_m ~ Brain_Size_Species_Mean, data = d)
