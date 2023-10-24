@@ -27,8 +27,10 @@ additional.data.frame <- rnorm(50,6,1)
 
 
 ### Create the Function
+
+
 ```{r}
-z.prop.test <- function (x = NULL, y = NULL, alternative = "two.sided", mu = 0, sigma.x = NULL, 
+z.prop.test <- function (x, y = NULL, alternative = "two.sided", mu = 0, sigma.x, 
     sigma.y = NULL, conf.level = 0.95) 
 {
     choices <- c("two.sided", "greater", "less")
@@ -51,7 +53,12 @@ z.prop.test <- function (x = NULL, y = NULL, alternative = "two.sided", mu = 0, 
         method <- c("One-sample z-Test")
         names(estimate) <- c("mean of x")
     }
-
+       if (is.null(sigma.y)) {
+        stderr <- sigma.x/sqrt(mx)
+        zobs <- (mx - mu)/stderr
+        method <- c("One-sample z-Test")
+        names(estimate) <- c("mean of x")
+    }
     else {
         my <- mean(y)
         method <- c("Two-sample z-Test")
@@ -92,7 +99,7 @@ z.prop.test <- function (x = NULL, y = NULL, alternative = "two.sided", mu = 0, 
 ```
 
 ```{r}
-z.prop.test(x = data.frame, y = additional.data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = 2, conf.level = 0.95) 
+z.prop.test(data.frame, y = additional.data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = NULL, conf.level = 0.95) 
 ```
 
 ### Part 2
