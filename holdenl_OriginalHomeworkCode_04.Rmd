@@ -38,6 +38,7 @@ z.prop.test <- function (x = NULL, y = NULL, alternative = "two.sided", mu = 0, 
     if (!is.null(y)) {
         dname <- paste(deparse(substitute(x)), "and", paste(deparse(substitute(y))))
     }
+  
     else {
         dname <- deparse(substitute(x))
     }
@@ -56,7 +57,7 @@ z.prop.test <- function (x = NULL, y = NULL, alternative = "two.sided", mu = 0, 
         method <- c("Two-sample z-Test")
         estimate <- c(mx, my)
         names(estimate) <- c("mean of x", "mean of y")
-        stderr <- sqrt(((sigma.x^2)/nx) + ((sigma.y^2)/ny))
+        stderr <- sqrt(((sigma.x^2)/mx) + ((sigma.y^2)/my))
         zobs <- (mx - my - mu)/stderr
     }
     if (alternative == "less") {
@@ -91,7 +92,7 @@ z.prop.test <- function (x = NULL, y = NULL, alternative = "two.sided", mu = 0, 
 ```
 
 ```{r}
-z.prop.test(data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, conf.level = 0.95) 
+z.prop.test(x = data.frame, y = additional.data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = 2, conf.level = 0.95) 
 ```
 
 ### Part 2
