@@ -1,7 +1,7 @@
 ---
 title: "What's Your Malfunction?"
 author: "Lillian Holden"
-date: "2023-10-23"
+date: "Due for Peer Commentary October 25th by 5 PM"
 output: html_document
 editor_options: 
   chunk_output_type: inline
@@ -11,12 +11,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-install.packages("BSDA")
-library(BSDA)
-```
-
-### Part 1
+## Part 1
 
 ### Create Two Data Sets with Normal Distribution
 ```{r}
@@ -25,18 +20,24 @@ data.frame <- rnorm(50,5,1)
 additional.data.frame <- rnorm(50,6,1)
 ```
 
+### Create one Data Set without Normal Distribution
+```{r}
+baddistribution <- c(1, 2, 3, 4, 5)
+baddistribution
+```
 
 ### Create the Function
 
+I am unsure of how to add code to to test (n∗p>5 and n∗(1−p)>5). Any suggestions?
 
 ```{r}
-z.prop.test <- function (x, y = NULL, alternative = "two.sided", mu = 0, sigma.x, 
+z.prop.test <- function (x, y = NULL, alternative = "two.sided", mu, sigma.x, 
     sigma.y = NULL, conf.level = 0.95) 
 {
     choices <- c("two.sided", "greater", "less")
     alt <- pmatch(alternative, choices)
     alternative <- choices[alt]
-    
+   
     if (!is.null(y)) {
         dname <- paste(deparse(substitute(x)), "and", paste(deparse(substitute(y))))
     }
@@ -88,6 +89,7 @@ z.prop.test <- function (x, y = NULL, alternative = "two.sided", mu = 0, sigma.x
         names(mu) <- "difference in means"
      if (!is.null(x)) 
         names(mu) <- "difference in means"
+  
     else names(mu) <- "mean"
     attr(cint, "conf.level") <- conf.level
     rval <- list(statistic = zobs, p.value = pval, conf.int = cint, 
@@ -98,13 +100,25 @@ z.prop.test <- function (x, y = NULL, alternative = "two.sided", mu = 0, sigma.x
 }
 ```
 
+### Test to See if The Function Works with Multiple Scenerios
 ```{r}
-z.prop.test(data.frame, y = additional.data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = NULL, conf.level = 0.95) 
+#y and sigma.y = NULL
+z.prop.test(data.frame, y = NULL, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = NULL, conf.level = 0.95) 
 ```
 
-### Part 2
+```{r}
+#sigma.y = NULL
+z.prop.test(data.frame, y=additional.data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = NULL, conf.level = 0.95) 
+```
 
 ```{r}
+#all information included
+z.prop.test(data.frame, y=additional.data.frame, alternative = "two.sided", mu = 0, sigma.x = 2, sigma.y = 3, conf.level = 0.95) 
+```
+
+## Part 2
+
+```{r warning=FALSE}
 library(curl)
 library(ggplot2)
 library(tidyverse)
@@ -133,7 +147,7 @@ mII <-  lm(log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean), data = d)
 summary(mII)
 ```
 
-```{r}
+```{r warning=FALSE}
 par(mfrow = c(1, 2))
 g <- ggplot(data = d, aes(x = Brain_Size_Species_Mean, y = MaxLongevity_m))
 g <- g + geom_point()
@@ -161,7 +175,7 @@ ciII <- confint(mII, level = 0.90)
 ciII
 ```
 ### Plot the 90% CI and Predicion 
-```{r}
+```{r warning=FALSE}
 g <- ggplot(data = d, aes(x = Brain_Size_Species_Mean, y = MaxLongevity_m))
 g <- g + geom_point()
 g <- g + geom_smooth(method = "lm", formula = y ~ x, color = "black")
@@ -169,7 +183,7 @@ g <- g + geom_abline(intercept = 230.540738, slope = 1.035571, linewidth = 1, co
 g <- g + geom_abline(intercept = 267.36379, slope = 1.40041, linewidth = 1, color = "blue")
 g + annotate("text", x = 150, y = 800, label = "y=1.2180x + 248.9523")
 ```
-```{r}
+```{r warning=FALSE}
 h <- ggplot(data = d, aes(x = log(Brain_Size_Species_Mean), y = log(MaxLongevity_m)))
 h <- h + geom_point()
 h <- h + geom_smooth(method = "lm", formula = y ~ x, color = "black")
@@ -178,7 +192,7 @@ h <- h + geom_abline(intercept = 4.9934084, slope = 0.2636595, linewidth = 1, co
 h + annotate("text", x = 2, y = 6.5, label = "y=0.23415x +  4.87895") 
 ```
 
-# I can't Figure out How to Make A Legend :( Any suggestions?
+## I can't Figure out How to Make A Legend :( Any suggestions?
 
 ```{r}
 cipredI <- predict(mI, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "confidence",
@@ -186,5 +200,5 @@ cipredI <- predict(mI, newdata = data.frame(Brain_Size_Species_Mean = 800), inte
 cipredI
 ```
 
-I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. 
+### I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. 
 
