@@ -1,8 +1,8 @@
 ---
 title: "What's Your Malfunction?"
 author: "Lillian Holden"
-date: "Final Homework Due November 1, by 5 PM"
-output: html_document
+date: "Final Homework Due November 1 by 5 PM"
+output: rmdformats::readthedown
 editor_options: 
   chunk_output_type: inline
 ---
@@ -20,15 +20,8 @@ data.frame <- rnorm(50,5,1)
 additional.data.frame <- rnorm(50,6,1)
 ```
 
-### Create one Data Set without Normal Distribution
-```{r}
-baddistribution <- c(1, 2, 3, 4, 5)
-baddistribution
-```
-
 ### Create the Function
 
-I am unsure of how to add code to to test (n∗p>5 and n∗(1−p)>5). Any suggestions?
 
 ```{r}
 z.prop.test <- function (p1, p2 = NULL, alternative = "two.sided", p0, n1, 
@@ -164,7 +157,7 @@ h + annotate("text", x = 2, y = 6.5, label = "y=0.23415x +  4.87895")
 
 - The estimate of the slope B1 for MaxLongevity_m ~ Brain_Size_Species_Mean is 1.2180. When B1 equals 0, y is equal to  248.9523. When B1 does not equal zero, it is the expected change in units of y for every 1 unit of change in x.
 
--The estimate of the slope B1 for log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean) is 0.23415. When B1 equals 0, y is equal to
+- The estimate of the slope B1 for log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean) is 0.23415. When B1 equals 0, y is equal to
 4.87895. When B1 does not equal zero, it is the expected change in units of y for every 1 unit of change in x.
 
 ### Find a 90% Confidence Interval Based on Each B1(m) Parameter
@@ -174,7 +167,7 @@ ciI
 ciII <- confint(mII, level = 0.90)  
 ciII
 ```
-Making a Prediction Based on Each B1(m) Parameter and 90% CI
+### Making a Prediction Based on Each B1(m) Parameter and 90% CI
 ```{r}
 predI <- predict(mI, level = 0.90) 
 head (predI)
@@ -213,7 +206,7 @@ lines(x = v, y = pi[, 3], col = "red")
 legend(4.5, 5.25, legend=c("Line of Best Fit", "Confidence", "Prediction"), fill = c("black", "blue","red"))
 ```
 
-Making a Prediction if the Mean is 800gm
+### Making a Prediction if the Brain Weight is 800gm
 ```{r}
 predI <- predict(mI, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "confidence",
     level = 0.90) 
@@ -224,5 +217,5 @@ predII <- predict(mII, newdata = data.frame(Brain_Size_Species_Mean = 800), inte
 predII
 ```
 
-### I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. 
+#### I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. 
 
