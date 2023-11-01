@@ -176,9 +176,11 @@ ciII
 ```
 #Find the Predictions 
 ```{r}
-pmI <- predict(mI, level = 0.90)
-pmI
+pi <- predict(mI, newdata = data.frame(Brain_Size_Species_Mean=d$Brain_Size_Species_Mean), interval = "prediction",
+    level = 0.90)  # for a vector of values
+head(pi)
 ```
+
 ```{r}
 pmII <- predict(mI, level = 0.90)
 pmII
