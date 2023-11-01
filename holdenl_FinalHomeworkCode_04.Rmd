@@ -139,15 +139,6 @@ d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE) #Assign D a
 head(d)
 ```
 
-### Plot the variables in a Scatterplot without the fitted line first
-```{r}
-par(mfrow = c(1, 2))
-plot(data=d, MaxLongevity_m ~ Brain_Size_Species_Mean)
-plot(data=d, log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean))
-```
-
-
-
 #### Call Information Required to Plot the Fitted Line - Determine the Intercept(B0) and Slope (B1)
 ```{r}
 mI <- lm(MaxLongevity_m ~ Brain_Size_Species_Mean, data = d)
