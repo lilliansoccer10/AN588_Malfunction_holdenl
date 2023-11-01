@@ -1,0 +1,212 @@
+---
+title: "What's Your Malfunction?"
+author: "Lillian Holden"
+date: "Final Homework Due November 1, by 5 PM"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part 1
+
+### Create Two Data Sets with Normal Distribution
+```{r}
+set.seed(1)
+data.frame <- rnorm(50,5,1)
+additional.data.frame <- rnorm(50,6,1)
+```
+
+### Create one Data Set without Normal Distribution
+```{r}
+baddistribution <- c(1, 2, 3, 4, 5)
+baddistribution
+```
+
+### Create the Function
+
+I am unsure of how to add code to to test (n∗p>5 and n∗(1−p)>5). Any suggestions?
+
+```{r}
+z.prop.test <- function (p1, p2 = NULL, alternative = "two.sided", p0, n1, 
+   n2 = NULL, conf.level = 0.95) 
+{ 
+    #Establish Variables for the Alternative Hypothesis That Will be Tested
+    choices <- c("two.sided", "greater", "less")
+    alt <- pmatch(alternative, choices)
+    alternative <- choices[alt]
+    
+
+    if (!is.null(p2)) {
+        dname <- paste(deparse(substitute(p1)), "and", paste(deparse(substitute(p2))))
+    }
+  
+    else {
+        dname <- deparse(substitute(p1))
+    }
+  
+#Finding the Mean of p1
+    mp1 <- mean(p1) #name the mean of p1 as mp1
+    estimate <- mp1 #estimate the mean of p1 aka mp1
+#Perform a One Sample Z Test if p2 is null
+    if (is.null(p2)) {
+        stderr <- n1/sqrt(mp1)
+        zobs <- (mp1 - p0)/stderr
+        method <- c("One-sample z-Test")
+        names(estimate) <- c("mean of p1")
+    }
+#Perform a One Sample Z Test if n2 is null
+       if (is.null(n2)) {
+        stderr <- n1/sqrt(mp1)
+        zobs <- (mp1 - p0)/stderr
+        method <- c("One-sample z-Test")
+        names(estimate) <- c("mean of p1")
+    }
+    else {
+#Perform a Two Sample Z Test if p2 and n2 have values
+        mp2 <- mean(p2) #name the mean of p2 as mp2
+        method <- c("Two-sample z-Test")
+        estimate <- c(mp1, mp2) #estimate the means of p1 and p2
+        names(estimate) <- c("mean of p1", "mean of p2")
+        stderr <- sqrt(((n1^2)/mp1) + ((n2^2)/mp2))
+        zobs <- (mp1 - mp2 - p0)/stderr
+    }
+    if (alternative == "less") {
+        pval <- pnorm(zobs)
+        cint <- c(NA, zobs * stderr + qnorm(conf.level) * stderr)
+    }
+    else if (alternative == "greater") {
+        pval <- 1 - pnorm(zobs)
+        cint <- c(zobs * stderr - qnorm(conf.level) * stderr, 
+            NA)
+    }
+    else {
+        pval <- 2 * pnorm(-abs(zobs))
+        alpha <- 1 - conf.level
+        cint <- c(zobs * stderr - qnorm((1 - alpha/2)) * stderr, 
+            zobs * stderr + qnorm((1 - alpha/2)) * stderr)
+    }
+    
+    cint <- cint + p0
+    names(zobs) <- "z"
+    if (!is.null(p2)) 
+        names(p0) <- "difference in means"
+     if (!is.null(p1)) 
+        names(p0) <- "difference in means"
+  
+    else names(p0) <- "mean"
+    attr(cint, "conf.level") <- conf.level
+#Use the list() function, so that each variable is expressed once the function is run
+    rval <- list(statistic = zobs, p.value = pval, conf.int = cint, 
+        estimate = estimate, null.value = p0, alternative = alternative, 
+        method = method, data.name = dname)
+    attr(rval, "class") <- "htest"
+    return(rval) #Displays the list that was described
+}
+```
+
+### Test to See if The Function Works with Multiple Scenerios
+```{r}
+#Testing the function if p2 and n2 = NULL
+z.prop.test(data.frame, additional.data.frame, alternative = "two.sided", p0 = 0, n1 = 2, n2 = NULL, conf.level = 0.95) 
+```
+
+```{r}
+#Testing the function if p2 = NULL
+z.prop.test(data.frame, p2=additional.data.frame, alternative = "two.sided", p0 = 0, n1 = 2, n2 = NULL, conf.level = 0.95) 
+```
+
+```{r}
+#Testing the function if all information included
+z.prop.test(data.frame, p2=additional.data.frame, alternative = "two.sided", p0 = 0, n1 = 2, n2 = 3, conf.level = 0.95) 
+```
+
+## Part 2
+
+```{r warning=FALSE}
+library(curl)
+library(ggplot2)
+library(tidyverse)
+```
+
+### Import the Data Set
+```{r}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/KamilarAndCooperData.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE) #Assign D as the vector for the data set
+head(d)
+```
+
+### Plot the variables in a Scatterplot without the fitted line first
+```{r}
+par(mfrow = c(1, 2))
+plot(data=d, MaxLongevity_m ~ Brain_Size_Species_Mean)
+plot(data=d, log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean))
+```
+
+
+
+#### Call Information Required to Plot the Fitted Line - Determine the Intercept(B0) and Slope (B1)
+```{r}
+mI <- lm(MaxLongevity_m ~ Brain_Size_Species_Mean, data = d)
+summary(mI)
+mII <-  lm(log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean), data = d)
+summary(mII)
+```
+### Add A Fitted Line to the Scatterplots Using ggplot2 
+```{r warning=FALSE}
+par(mfrow = c(1, 2))
+g <- ggplot(data = d, aes(x = Brain_Size_Species_Mean, y = MaxLongevity_m))
+g <- g + geom_point()
+g <- g + geom_smooth(method = "lm", formula = y ~ x)
+g + annotate("text", x = 150, y = 800, label = "y=1.2180x + 248.9523")
+h <- ggplot(data = d, aes(x = log(Brain_Size_Species_Mean), y = log(MaxLongevity_m)))
+h <- h + geom_point()
+h <- h + geom_smooth(method = "lm", formula = y ~ x)
+h + annotate("text", x = 2, y = 6.5, label = "y=0.23415x +  4.87895")
+```
+
+
+### Identify and interpret the point estimate of the slope (β1), as well as the outcome of the test associated with the hypotheses H0: β1 = 0; HA: β1 ≠ 0. Also, find a 90 percent CI for the slope (β1) parameter.
+
+- The estimate of the slope B1 for MaxLongevity_m ~ Brain_Size_Species_Mean is 1.2180. When B1 equals 0, y is equal to  248.9523. When B1 does not equal zero, it is the expected change in units of y for every 1 unit of change in x.
+
+-The estimate of the slope B1 for log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean) is 0.23415. When B1 equals 0, y is equal to
+4.87895. When B1 does not equal zero, it is the expected change in units of y for every 1 unit of change in x.
+
+### Find a 90% Confidence Interval Based on Each B1(m) Parameter
+```{r}
+ciI <- confint(mI, level = 0.90)  
+ciI
+ciII <- confint(mII, level = 0.90)  
+ciII
+```
+### Plot the 90% CI and Predicion 
+```{r warning=FALSE}
+g <- ggplot(data = d, aes(x = Brain_Size_Species_Mean, y = MaxLongevity_m))
+g <- g + geom_point()
+g <- g + geom_smooth(method = "lm", formula = y ~ x, color = "black")
+g <- g + geom_abline(intercept = 230.540738, slope = 1.035571, linewidth = 1, color = "blue")
+g <- g + geom_abline(intercept = 267.36379, slope = 1.40041, linewidth = 1, color = "blue")
+g + annotate("text", x = 150, y = 800, label = "y=1.2180x + 248.9523")
+```
+```{r warning=FALSE}
+h <- ggplot(data = d, aes(x = log(Brain_Size_Species_Mean), y = log(MaxLongevity_m)))
+h <- h + geom_point()
+h <- h + geom_smooth(method = "lm", formula = y ~ x, color = "black")
+h <- h + geom_abline(intercept = 4.7644934, slope = 0.2046396, linewidth = 1, color = "blue")
+h <- h + geom_abline(intercept = 4.9934084, slope = 0.2636595, linewidth = 1, color = "blue")
+h + annotate("text", x = 2, y = 6.5, label = "y=0.23415x +  4.87895") 
+```
+
+
+```{r}
+cipredI <- predict(mI, newdata = data.frame(Brain_Size_Species_Mean = 800), interval = "confidence",
+    level = 0.90) 
+cipredI
+```
+
+### I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. 
+
