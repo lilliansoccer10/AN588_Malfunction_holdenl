@@ -10,6 +10,13 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+### Five Challenges
+1. I found the creation of the function extremely challenging. I was unable to figure out where to start until I went to office hours and professor Schmitt told me about the option to type in the name of a desired test with no additional factors and it will ouput the code used to create it. I used some of this code and altered it to fit the parameters that were required for this assignment. 
+2. I had a hard time plotting the line of best fit's model equation onto the graphs. Professor Schmitt directed me to use the annotate() function. I used "?annotate" to find an example of how this function was used and it ended up working for me!
+3. I was unable to figure out how to plot the prediction lines within the plots in part two of the assignment. With the help from peer commentary and module 12, I was able to figure it out, which made me extremely happy. 
+4. I had issues with creating a warning if the following parameters were not met: 
+5. Overall, this assignment was very challenging, and I spent numerous hours working on it trying to work through it. I found that module 12 was very helpful as well as speaking with professor Schmitt at his office hours and booked meetings. I also believe that the assignment will be extremely useful in the future especially for times where we need to create our own function with set parameters to express data how we want it to be expressed.
+
 
 ## Part 1
 
@@ -119,7 +126,8 @@ z.prop.test(data.frame, p2=additional.data.frame, alternative = "two.sided", p0 
 
 ## Part 2
 
-```{r warning=FALSE}
+### Use library() to access the following packages: 
+```{r message=FALSE, warning=FALSE}
 library(curl)
 library(ggplot2)
 library(tidyverse)
@@ -217,5 +225,6 @@ predII <- predict(mII, newdata = data.frame(Brain_Size_Species_Mean = 800), inte
 predII
 ```
 
-#### I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. 
+#### I do trust the model to make that prediction because the fit was ~1223 with a 90% CI. The point is predicted to be between ~1089 and ~1357. When 800 is typed into the model equation alone y=1.2180x + 248.9523, it gets ~1223. Also if you type in the log(800) into the log model equation y=0.23415x +  4.87895, you get 6.44152. The point is predicted again with a 90% CI and is found somewhere between ~6.348235 and ~6.540065. I trust both the models to make the correct predictions, especially when there is a 90% CI in the prediction equation. 
+
 
