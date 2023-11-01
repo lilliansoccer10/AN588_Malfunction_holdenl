@@ -1289,8 +1289,8 @@ Homework Due November 1 by 5 PM</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="five-challenges" class="section level3">
-<h3>Five Challenges</h3>
+<div id="five-challenges-i-faced-with-homework-4" class="section level3">
+<h3>Five Challenges I Faced With Homework 4</h3>
 <ol style="list-style-type: decimal">
 <li>I found the creation of the function extremely challenging. I was
 unable to figure out where to start until I went to office hours and
@@ -1306,8 +1306,16 @@ used and it ended up working for me!</li>
 the plots in part two of the assignment. With the help from peer
 commentary and module 12, I was able to figure it out, which made me
 extremely happy.</li>
-<li>I had issues with creating a warning if the following parameters
-were not met:</li>
+<li>I had issues with creating a warning if the (n∗p&gt;5 and
+n∗(1−p)&gt;5) parameters were not met, and unfortunately still cannot
+figure it out. I believe something like this needs to be entered into
+the function, according to my peer’s code who I did commentary on, but I
+still cannot get it to work:( if (n1 * p1 &lt;= 5 || n1 * (1 - p1) &lt;=
+5) { warning(“The normality assumption may not hold as n<em>p or
+n</em>(1-p) is less than or equal to 5.”) } if (n1 * p1 &lt;= 5 || n1 *
+(1 - p1) &lt;= 5 || n2 * p2 &lt;= 5 || n2 * (1 - p2) &lt;= 5) {
+warning(“The normality assumption may not hold as n<em>p or n</em>(1-p)
+is less than or equal to 5 in one or both samples.”) }</li>
 <li>Overall, this assignment was very challenging, and I spent numerous
 hours working on it trying to work through it. I found that module 12
 was very helpful as well as speaking with professor Schmitt at his
@@ -1335,14 +1343,14 @@ we want it to be expressed.</li>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    alt <span class="ot">&lt;-</span> <span class="fu">pmatch</span>(alternative, choices)</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    alternative <span class="ot">&lt;-</span> choices[alt]</span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    </span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(p2)) {</span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>        dname <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">deparse</span>(<span class="fu">substitute</span>(p1)), <span class="st">&quot;and&quot;</span>, <span class="fu">paste</span>(<span class="fu">deparse</span>(<span class="fu">substitute</span>(p2))))</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    }</span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  </span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>        dname <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(p1))</span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    }</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(p2)) {</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>        dname <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">deparse</span>(<span class="fu">substitute</span>(p1)), <span class="st">&quot;and&quot;</span>, <span class="fu">paste</span>(<span class="fu">deparse</span>(<span class="fu">substitute</span>(p2))))</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    }</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>        dname <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(p1))</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    }</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  </span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  </span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#Finding the Mean of p1</span></span>
 <span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    mp1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(p1) <span class="co">#name the mean of p1 as mp1</span></span>
@@ -1386,22 +1394,23 @@ we want it to be expressed.</li>
 <span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a>            zobs <span class="sc">*</span> stderr <span class="sc">+</span> <span class="fu">qnorm</span>((<span class="dv">1</span> <span class="sc">-</span> alpha<span class="sc">/</span><span class="dv">2</span>)) <span class="sc">*</span> stderr)</span>
 <span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a>    }</span>
 <span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a>    </span>
-<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>    cint <span class="ot">&lt;-</span> cint <span class="sc">+</span> p0</span>
-<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a>    <span class="fu">names</span>(zobs) <span class="ot">&lt;-</span> <span class="st">&quot;z&quot;</span></span>
-<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(p2)) </span>
-<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a>        <span class="fu">names</span>(p0) <span class="ot">&lt;-</span> <span class="st">&quot;difference in means&quot;</span></span>
-<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>     <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(p1)) </span>
-<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a>        <span class="fu">names</span>(p0) <span class="ot">&lt;-</span> <span class="st">&quot;difference in means&quot;</span></span>
-<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a>  </span>
-<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a>    <span class="cf">else</span> <span class="fu">names</span>(p0) <span class="ot">&lt;-</span> <span class="st">&quot;mean&quot;</span></span>
-<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a>    <span class="fu">attr</span>(cint, <span class="st">&quot;conf.level&quot;</span>) <span class="ot">&lt;-</span> conf.level</span>
-<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a><span class="co">#Use the list() function, so that each variable is expressed once the function is run</span></span>
-<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a>    rval <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">statistic =</span> zobs, <span class="at">p.value =</span> pval, <span class="at">conf.int =</span> cint, </span>
-<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a>        <span class="at">estimate =</span> estimate, <span class="at">null.value =</span> p0, <span class="at">alternative =</span> alternative, </span>
-<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>        <span class="at">method =</span> method, <span class="at">data.name =</span> dname)</span>
-<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>    <span class="fu">attr</span>(rval, <span class="st">&quot;class&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;htest&quot;</span></span>
-<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>    <span class="fu">return</span>(rval) <span class="co">#Displays the list that was described</span></span>
-<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>  </span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a>    cint <span class="ot">&lt;-</span> cint <span class="sc">+</span> p0</span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>    <span class="fu">names</span>(zobs) <span class="ot">&lt;-</span> <span class="st">&quot;z&quot;</span></span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(p2)) </span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>        <span class="fu">names</span>(p0) <span class="ot">&lt;-</span> <span class="st">&quot;difference in means&quot;</span></span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a>     <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(p1)) </span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a>        <span class="fu">names</span>(p0) <span class="ot">&lt;-</span> <span class="st">&quot;difference in means&quot;</span></span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a>  </span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a>    <span class="cf">else</span> <span class="fu">names</span>(p0) <span class="ot">&lt;-</span> <span class="st">&quot;mean&quot;</span></span>
+<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a>    <span class="fu">attr</span>(cint, <span class="st">&quot;conf.level&quot;</span>) <span class="ot">&lt;-</span> conf.level</span>
+<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a><span class="co">#Use the list() function, so that each variable is expressed once the function is run</span></span>
+<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a>    rval <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">statistic =</span> zobs, <span class="at">p.value =</span> pval, <span class="at">conf.int =</span> cint, </span>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>        <span class="at">estimate =</span> estimate, <span class="at">null.value =</span> p0, <span class="at">alternative =</span> alternative, </span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>        <span class="at">method =</span> method, <span class="at">data.name =</span> dname)</span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>    <span class="fu">attr</span>(rval, <span class="st">&quot;class&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;htest&quot;</span></span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>    <span class="fu">return</span>(rval) <span class="co">#Displays the list that was described</span></span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="test-to-see-if-the-function-works-with-multiple-scenerios" class="section level3">
 <h3>Test to See if The Function Works with Multiple Scenerios</h3>

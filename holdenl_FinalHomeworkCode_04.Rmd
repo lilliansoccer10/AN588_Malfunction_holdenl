@@ -10,11 +10,17 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-### Five Challenges
+### Five Challenges I Faced With Homework 4 
 1. I found the creation of the function extremely challenging. I was unable to figure out where to start until I went to office hours and professor Schmitt told me about the option to type in the name of a desired test with no additional factors and it will ouput the code used to create it. I used some of this code and altered it to fit the parameters that were required for this assignment. 
 2. I had a hard time plotting the line of best fit's model equation onto the graphs. Professor Schmitt directed me to use the annotate() function. I used "?annotate" to find an example of how this function was used and it ended up working for me!
 3. I was unable to figure out how to plot the prediction lines within the plots in part two of the assignment. With the help from peer commentary and module 12, I was able to figure it out, which made me extremely happy. 
-4. I had issues with creating a warning if the following parameters were not met: 
+4. I had issues with creating a warning if the (n∗p>5 and n∗(1−p)>5) parameters were not met, and unfortunately still cannot figure it out. I believe something like this needs to be entered into the function, according to my peer's code who I did commentary on, but I still cannot get it to work:(
+    if (n1 * p1 <= 5 || n1 * (1 - p1) <= 5) {
+      warning("The normality assumption may not hold as n*p or n*(1-p) is less than or equal to 5.")
+    }
+    if (n1 * p1 <= 5 || n1 * (1 - p1) <= 5 || n2 * p2 <= 5 || n2 * (1 - p2) <= 5) {
+      warning("The normality assumption may not hold as n*p or n*(1-p) is less than or equal to 5 in one or both samples.")
+    }
 5. Overall, this assignment was very challenging, and I spent numerous hours working on it trying to work through it. I found that module 12 was very helpful as well as speaking with professor Schmitt at his office hours and booked meetings. I also believe that the assignment will be extremely useful in the future especially for times where we need to create our own function with set parameters to express data how we want it to be expressed.
 
 
@@ -39,7 +45,6 @@ z.prop.test <- function (p1, p2 = NULL, alternative = "two.sided", p0, n1,
     alt <- pmatch(alternative, choices)
     alternative <- choices[alt]
     
-
     if (!is.null(p2)) {
         dname <- paste(deparse(substitute(p1)), "and", paste(deparse(substitute(p2))))
     }
@@ -47,6 +52,7 @@ z.prop.test <- function (p1, p2 = NULL, alternative = "two.sided", p0, n1,
     else {
         dname <- deparse(substitute(p1))
     }
+  
   
 #Finding the Mean of p1
     mp1 <- mean(p1) #name the mean of p1 as mp1
@@ -90,6 +96,7 @@ z.prop.test <- function (p1, p2 = NULL, alternative = "two.sided", p0, n1,
             zobs * stderr + qnorm((1 - alpha/2)) * stderr)
     }
     
+  
     cint <- cint + p0
     names(zobs) <- "z"
     if (!is.null(p2)) 
