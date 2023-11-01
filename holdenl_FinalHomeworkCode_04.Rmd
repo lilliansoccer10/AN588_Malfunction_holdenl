@@ -193,7 +193,7 @@ g <- g + geom_point()
 g <- g + geom_smooth(method = "lm", formula = y ~ x, color = "black")
 g <- g + geom_abline(intercept = 230.540738, slope = 1.035571, linewidth = 1, color = "blue")
 g <- g + geom_abline(intercept = 267.36379, slope = 1.40041, linewidth = 1, color = "blue")
-g + annotate("text", x = 150, y = 800, label = "y=1.2180x + 248.9523") 
+g + annotate("text", x = 150, y = 800, label = "y=1.2180x + 248.9523")
 ```
 
 ```{r warning=FALSE}
